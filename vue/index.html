@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Vue 3.0.2 예시</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./" />
+    <script src="../lib/vue@3.0.2.global.prod.js"></script>
+  </head>
+  <body>
+    <p>잘 동작 합니까?</p>
+    <a href="#" class="link" @click="handlePreventEventForShowingMessage">
+      링크 동작 막기!!
+    </a>
+    <p class="message">{{message}}</p>
+    <script>
+      // ECMA 3
+      ;(function ($) {
+        var App = {
+          data: function () {
+            return {
+              message: null,
+              timer: null,
+            }
+          },
+          methods: {
+            handlePreventEventForShowingMessage: function (event) {
+              event.preventDefault()
+              if (this.timer) clearTimeout(this.timer)
+              this._writeMessage()
+              this.timer = setTimeout(this._clearMessage, 1000)
+              return false
+            },
+            _writeMessage: function () {
+              return (this.message = '잘 막아졌네요.')
+            },
+            _clearMessage: function () {
+              return (this.message = null)
+            },
+          },
+        }
+        return $.createApp(App).mount('body')
+      })(Vue)
+    </script>
+  </body>
+</html>

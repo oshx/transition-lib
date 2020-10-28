@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>jQuery 1.12.4 예시</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./" />
+    <script src="../lib/jquery-1.12.4.min.js"></script>
+  </head>
+  <body>
+    <p>잘 동작 합니까?</p>
+    <a href="#" class="link">링크 동작 막기!!</a>
+    <p class="message"></p>
+    <script>
+      ;(function ($) {
+        return $(function () {
+          var $message = $('.message')
+          var $a = $('a.link')
+
+          function _clearMessage(next) {
+            $message.text('')
+            next()
+          }
+
+          function handlePreventEventForShowingMessage(event) {
+            event.preventDefault()
+            $message
+              .stop()
+              .clearQueue()
+              .text('잘 막아졌네요.')
+              .delay(1000)
+              .queue(_clearMessage)
+            return false
+          }
+
+          $a.click(handlePreventEventForShowingMessage)
+        })
+      })(jQuery)
+    </script>
+  </body>
+</html>
